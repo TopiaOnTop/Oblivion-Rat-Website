@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oblivion — Remote Control</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="site.css" />
+</head>
+
+<body>
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Sidebar -->
+    <aside class="control-sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-satellite-dish"></i>
+            <span>OBLIVION</span>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><button class="menu-item-btn active" data-page="home">
+      <i class="fa-solid fa-house"></i>
+      <span data-i18n="nav_home">Accueil</span>
+    </button></li>
+            <li><button class="menu-item-btn" data-page="features">
+      <i class="fa-solid fa-puzzle-piece"></i>
+      <span data-i18n="nav_features">Features</span>
+    </button></li>
+            <li><button class="menu-item-btn" data-page="updates">
+      <i class="fa-solid fa-code-branch"></i>
+      <span data-i18n="nav_updates">Updates</span>
+    </button></li>
+            <li><button class="menu-item-btn" data-page="media">
+      <i class="fa-solid fa-photo-film"></i>
+      <span data-i18n="nav_media">Media</span>
+    </button></li>
+            <li><button class="menu-item-btn" data-page="pricing">
+      <i class="fa-solid fa-tag"></i>
+      <span data-i18n="nav_pricing">Pricing</span>
+    </button></li>
+            <li><button class="menu-item-btn" data-page="contact">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span data-i18n="nav_contact">Contact</span>
+    </button></li>
+        </ul>
+
+        <div class="sidebar-bottom">
+            <div class="lang-toggle" id="langToggle" title="Switch language">
+                <span class="lang-opt active" data-lang="fr">FR</span>
+                <span class="lang-sep">/</span>
+                <span class="lang-opt" data-lang="en">EN</span>
+            </div>
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                <span data-i18n="status_online">Système en ligne</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile nav -->
+    <div class="vnc-mobile-nav">
+        <div class="sidebar-brand" style="margin:0;">
+            <i class="fa-solid fa-satellite-dish"></i> OBLIVION
+        </div>
+        <button class="vnc-mobile-bar-btn" id="mobileMenuBtn"><i class="fa-solid fa-bars"></i></button>
+    </div>
+
+    <!-- Main content -->
+    <main class="site-main" id="mainContent">
+
+        <!-- PAGE: HOME -->
+        <section class="page" id="page-home">
+            <div class="hero-section">
+                <div class="hero-scan-line"></div>
+                <div class="hero-content">
+                    <div class="hero-badge" data-i18n="hero_badge">Contrôle Total · Sécurisé · Professionnel</div>
+                    <h1 class="hero-title">
+                        <span class="hero-title-main">OBLIVION</span>
+                        <span class="hero-title-sub" data-i18n="hero_subtitle">Remote Control Suite</span>
+                    </h1>
+                    <p class="hero-desc" data-i18n="hero_desc">
+                        Prenez le contrôle total de vos machines distantes avec un rat, et pensée pour les équipes red team pour hacking.
+
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn-primary" data-page-link="features" data-i18n="hero_cta_features">Voir les features</button>
+                        <button class="btn-ghost" data-page-link="pricing" data-i18n="hero_cta_pricing">Voir les tarifs</button>
+                    </div>
+                </div>
+                <div class="hero-terminal">
+                    <div class="terminal-bar">
+                        <span class="t-dot t-red"></span>
+                        <span class="t-dot t-yellow"></span>
+                        <span class="t-dot t-green"></span>
+                        <span class="t-title">oblivion — session active</span>
+                    </div>
+                    <div class="terminal-body" id="heroTerminal"></div>
+                </div>
+            </div>
+
+            <div class="home-stats">
+                <div class="stat-card">
+                    <div class="stat-num" data-count="17">17</div>
+                    <div class="stat-label" data-i18n="stat_machines">Options</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-count="100">100</div>
+                    <div class="stat-label" data-i18n="stat_uptime">% Stability</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-count="150">150</div>
+                    <div class="stat-label" data-i18n="stat_ms">ms latence moyenne</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" data-count="0">0</div>
+                    <div class="stat-label" data-i18n="stat_clients">Logs</div>
+                </div>
+            </div>
+
+            <div class="home-why">
+                <h2 class="section-title" data-i18n="why_title">Pourquoi Oblivion ?</h2>
+                <div class="why-grid">
+                    <div class="why-card">
+                        <i class="fa-solid fa-dollar-sign why-icon"></i>
+                        <h3 data-i18n="why_ethical_title">Éthique by design</h3>
+                        <p data-i18n="why_ethical_desc">Consentement explicite, logs d'audit complets et transparence totale sur chaque connexion.</p>
+                    </div>
+                    <div class="why-card">
+                        <i class="fa-solid fa-bolt why-icon"></i>
+                        <h3 data-i18n="why_fast_title">Performances extrêmes</h3>
+                        <p data-i18n="why_fast_desc">Protocole propriétaire optimisé pour une latence sub-20ms même sur les réseaux dégradés.</p>
+                    </div>
+                    <div class="why-card">
+                        <i class="fa-solid fa-shield-halved why-icon"></i>
+                        <h3 data-i18n="why_secure_title">Sécurité militaire</h3>
+                        <p data-i18n="why_secure_desc">Chiffrement end-to-end TLS 1.3, 2FA obligatoire, zero-knowledge architecture.</p>
+                    </div>
+                    <div class="why-card">
+                        <i class="fa-solid fa-code why-icon"></i>
+                        <h3 data-i18n="why_api_title">API-first</h3>
+                        <p data-i18n="why_api_desc">Intégrez Oblivion dans vos pipelines CI/CD, ITSM ou solutions de monitoring existantes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: FEATURES -->
+        <section class="page" id="page-features" style="display:none;">
+            <div class="page-header">
+                <h2 class="section-title" data-i18n="features_title">Features</h2>
+                <p class="section-desc" data-i18n="features_desc">Choisissez le plan adapté à vos besoins. Toutes les fonctionnalités sont détaillées ci-dessous.</p>
+            </div>
+            <div class="tier-tabs">
+                <button class="tier-btn active" data-tier="free">
+        <i class="fa-solid fa-seedling"></i> Free
+      </button>
+                <button class="tier-btn" data-tier="medium">
+        <i class="fa-solid fa-layer-group"></i> Medium
+      </button>
+                <button class="tier-btn" data-tier="pro">
+        <i class="fa-solid fa-crown"></i> Pro
+      </button>
+            </div>
+            <div class="features-grid" id="featuresGrid">
+                <div class="loading-indicator"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+            </div>
+        </section>
+
+        <!-- PAGE: UPDATES -->
+        <section class="page" id="page-updates" style="display:none;">
+            <div class="page-header">
+                <h2 class="section-title" data-i18n="updates_title">Updates</h2>
+                <p class="section-desc" data-i18n="updates_desc">Historique complet des versions et changements d'Oblivion.</p>
+            </div>
+            <div class="updates-list" id="updatesList">
+                <div class="loading-indicator"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+            </div>
+        </section>
+
+        <!-- PAGE: MEDIA -->
+        <section class="page" id="page-media" style="display:none;">
+            <div class="page-header">
+                <h2 class="section-title" data-i18n="media_title">Media</h2>
+                <p class="section-desc" data-i18n="media_desc">Captures d'écran et démonstrations visuelles d'Oblivion en action.</p>
+            </div>
+            <div class="media-grid" id="mediaGrid">
+
+                <div class="media-item" data-src="screenshot1.png">
+                    <img src="screenshot1.png" alt="Media 1" class="media-preview" />
+                    <div class="media-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                </div>
+
+                <div class="media-item" data-src="screenshot2.png">
+                    <img src="screenshot2.png" alt="Media 2" class="media-preview" />
+                    <div class="media-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                </div>
+
+                <div class="media-item" data-src="screenshot3.png">
+                    <img src="screenshot3.png" alt="Media 3" class="media-preview" />
+                    <div class="media-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                </div>
+
+                <div class="media-item" data-src="screenshot4.png">
+                    <img src="screenshot4.png" alt="Media 4" class="media-preview" />
+                    <div class="media-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                </div>
+
+                <div class="media-item" data-src="screenshot5.png">
+                    <img src="screenshot5.png" alt="Media 5" class="media-preview" />
+                    <div class="media-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                </div>
+
+                <div class="media-item" data-src="screenshot6.png">
+                    <img src="screenshot6.png" alt="Media 6" class="media-preview" />
+                    <div class="media-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+                </div>
+
+            </div>
+
+            <div class="lightbox" id="lightbox">
+                <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+                <button class="lightbox-nav prev" id="lightboxPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="lightbox-content">
+                    <img src="" alt="" id="lightboxImg" />
+                </div>
+                <button class="lightbox-nav next" id="lightboxNext"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- PAGE: PRICING -->
+        <section class="page" id="page-pricing" style="display:none;">
+            <div class="page-header">
+                <h2 class="section-title" data-i18n="pricing_title">Pricing</h2>
+                <p class="section-desc" data-i18n="pricing_desc">Des plans adaptés à chaque usage. Pas de surprise, pas de frais cachés.</p>
+            </div>
+            <div class="pricing-info-strip">
+                <div class="pricing-info-item"><i class="fa-solid fa-check"></i> <span data-i18n="pricing_strip3">Mises à jour gratuites</span></div>
+            </div>
+            <div class="pricing-grid">
+                <!-- Free Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-tier-label free-label">Free</div>
+                    <div class="pricing-price"><span class="price-amount">0€</span><span class="price-period" data-i18n="price_forever">/toujours</span></div>
+                    <p class="pricing-tagline" data-i18n="pricing_free_tag">Pour commencer et tester Oblivion.</p>
+                    <ul class="pricing-features-list">
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_f1">Informations système</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_f2">Écran & Caméra en direct</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_f3">Options Troll</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_f4">Gestionnaire de fichiers</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_f5">Reverse Shell</span></li>
+                        <li class="disabled"><i class="fa-solid fa-xmark"></i> <span data-i18n="pf_m1">Full VNC + HVNC (Hidden)</span></li>
+                    </ul>
+                    <button class="pricing-cta btn-ghost" data-page-link="contact" data-i18n="pricing_cta_free">Commencer gratuitement</button>
+                </div>
+
+                <!-- Medium Plan -->
+                <div class="pricing-card featured">
+                    <div class="featured-badge" data-i18n="featured_badge">Recommandé</div>
+                    <div class="pricing-tier-label medium-label">Medium</div>
+                    <div class="pricing-price"><span class="price-amount">20€</span><span class="price-period" data-i18n="price_month">/mois</span></div>
+                    <p class="pricing-tagline" data-i18n="pricing_medium_tag">Pour les équipes IT en croissance.</p>
+                    <ul class="pricing-features-list">
+                        <li class="bonus-include"><i class="fa-solid fa-plus"></i> <span data-i18n="pf_include_free">Tout le plan Free inclus</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_m1">Full VNC + HVNC (Hidden)</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_m2">Gestionnaire de processus</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_m3">Chat en direct (Live Chat)</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_m4">Keylogger en temps réel</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_m5">Module Worm (Propagation)</span></li>
+                        <li class="disabled"><i class="fa-solid fa-xmark"></i> <span data-i18n="pf_p1">Auto Unlock & Crypto Cracking</span></li>
+                    </ul>
+                    <button class="pricing-cta btn-primary" data-page-link="contact" data-i18n="pricing_cta_medium">Obtenir Medium</button>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-tier-label pro-label">Pro</div>
+                    <div class="pricing-price"><span class="price-amount">50€</span><span class="price-period" data-i18n="price_month">/mois</span></div>
+                    <p class="pricing-tagline" data-i18n="pricing_pro_tag">Pour les pros et grandes entreprises IT.</p>
+                    <ul class="pricing-features-list">
+                        <li class="bonus-include"><i class="fa-solid fa-plus"></i> <span data-i18n="pf_include_medium">Tout le plan Medium inclus</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_p1">Auto Unlock (PIN/Mots de passe)</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_p2">Crypto Cracking (Smart Algorithme)</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_p3">Module Ransomware Avancé</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_p4">Gestion & Écoute Audio Live</span></li>
+                        <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_p5">Auto-Removal (0 traces)</span></li>
+                    </ul>
+                    <button class="pricing-cta btn-ghost" data-page-link="contact" data-i18n="pricing_cta_pro">Obtenir Pro</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: CONTACT -->
+        <section class="page" id="page-contact" style="display:none;">
+            <div class="page-header">
+                <h2 class="section-title" data-i18n="contact_title">Contact</h2>
+                <p class="section-desc" data-i18n="contact_desc">Rejoins la communauté ou contacte-nous directement. On est là.</p>
+            </div>
+            <div class="contact-grid">
+                <a class="contact-card" href="https://guns.lol/topia1" target="_blank" rel="noopener">
+                    <div class="contact-icon-wrap gunslol-icon">
+                        <i class="fa-solid fa-crosshairs"></i>
+                    </div>
+                    <div class="contact-info">
+                        <span class="contact-platform">guns.lol</span>
+                        <span class="contact-handle" data-i18n="contact_gunslol">Profil principal</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+                </a>
+                <a class="contact-card" href="https://discord.gg/5jtBUHxgeF" target="_blank" rel="noopener">
+                    <div class="contact-icon-wrap discord-icon">
+                        <i class="fa-brands fa-discord"></i>
+                    </div>
+                    <div class="contact-info">
+                        <span class="contact-platform">Discord</span>
+                        <span class="contact-handle" data-i18n="contact_discord">Rejoindre le serveur</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+                </a>
+                <a class="contact-card" href="https://www.tiktok.com/@topia536" target="_blank" rel="noopener">
+                    <div class="contact-icon-wrap tiktok-icon">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </div>
+                    <div class="contact-info">
+                        <span class="contact-platform">TikTok</span>
+                        <span class="contact-handle" data-i18n="contact_tiktok">Suivre les démos</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+                </a>
+                <a class="contact-card" href="https://t.me/Layer4Terrorist" target="_blank" rel="noopener">
+                    <div class="contact-icon-wrap telegram-icon">
+                        <i class="fa-brands fa-telegram"></i>
+                    </div>
+                    <div class="contact-info">
+                        <span class="contact-platform">Telegram</span>
+                        <span class="contact-handle" data-i18n="contact_telegram">Message avec le dev</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+                </a>
+            </div>
+            <div class="contact-note">
+                <i class="fa-solid fa-circle-info"></i>
+                <span data-i18n="contact_note">Pour les demandes de licence Pro ou support entreprise, privilégiez Telegram ou Discord.</span>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <script>
+        // ============================================================
+        // TRANSLATIONS
+        // ============================================================
+        const i18n = {
+            fr: {
+                nav_home: "Accueil",
+                nav_features: "Features",
+                nav_updates: "Updates",
+                nav_media: "Media",
+                nav_pricing: "Pricing",
+                nav_contact: "Contact",
+                status_online: "Système en ligne",
+                hero_badge: "Contrôle Total · Sécurisé · Professionnel",
+                hero_subtitle: "Remote Control Suite",
+                hero_desc: "Prenez le contrôle total de vos machines distantes avec un rat, et pensée pour les équipes red team pour hacking.",
+                hero_cta_features: "Voir les features",
+                hero_cta_pricing: "Voir les tarifs",
+                stat_machines: "Options",
+                stat_uptime: "% Stabilité",
+                stat_ms: "ms latence moyenne",
+                stat_clients: "Logs",
+                why_title: "Pourquoi Oblivion ?",
+                why_ethical_title: "HVNC & Crypto",
+                why_ethical_desc: "HVNC ultra avancé et réactif par rapport à d'autres rat et crackage de wallet cryptomonnaie via un algorithme spécial.",
+                why_fast_title: "Performances extrêmes",
+                why_fast_desc: "Latence optimisée pour un ping le plus bas possible, même sur des mauvais réseaux.",
+                why_secure_title: "Authentification et sécurité",
+                why_secure_desc: "50 chars token for every login and access to panel and endpoints.",
+                why_api_title: "API",
+                why_api_desc: "Possibilité d'utiliser les api oblivion pour control distant même sans le panel.",
+                features_title: "Features",
+                features_desc: "Choisissez le plan adapté à vos besoins. Toutes les fonctionnalités sont détaillées ci-dessous.",
+                updates_title: "Updates",
+                updates_desc: "Historique complet des versions et changements d'Oblivion.",
+                media_title: "Media",
+                media_desc: "Captures d'écran et démonstrations visuelles d'Oblivion en action.",
+                pricing_title: "Pricing",
+                pricing_desc: "Des plans adaptés à chaque usage. Pas de surprise, pas de frais cachés.",
+                pricing_strip1: "Annulation à tout moment",
+                pricing_strip2: "Chiffrement inclus sur tous les plans",
+                pricing_strip3: "Mises à jour gratuites",
+                price_forever: "/toujours",
+                price_month: "/mois",
+                pricing_free_tag: "Pour commencer et tester Oblivion.",
+                pricing_medium_tag: "Pour les équipes de sécurité en croissance.",
+                pricing_pro_tag: "Pour les experts et les audits avancés.",
+                featured_badge: "Recommandé",
+                pf_include_free: "Tout le plan Free inclus",
+                pf_include_medium: "Tout le plan Medium inclus",
+                pf_f1: "Informations système",
+                pf_f2: "Écran & Caméra en direct",
+                pf_f3: "Options Troll",
+                pf_f4: "Gestionnaire de fichiers",
+                pf_f5: "Reverse Shell",
+                pf_m1: "Full VNC + HVNC (Hidden)",
+                pf_m2: "Gestionnaire de processus",
+                pf_m3: "Chat en direct (Live Chat)",
+                pf_m4: "Keylogger en temps réel",
+                pf_m5: "Module Worm (Propagation)",
+                pf_p1: "Auto Unlock (PIN/Mots de passe)",
+                pf_p2: "Crypto Cracking (Algorithme)",
+                pf_p3: "Module Ransomware Avancé",
+                pf_p4: "Gestion & Écoute Audio Live",
+                pf_p5: "Auto-Removal (0 traces)",
+                pricing_cta_free: "Commencer gratuitement",
+                pricing_cta_medium: "Obtenir Medium",
+                pricing_cta_pro: "Obtenir Pro",
+                contact_title: "Contact",
+                contact_desc: "Rejoins la communauté ou contacte-nous directement. On est là.",
+                contact_gunslol: "Profil principal",
+                contact_discord: "Rejoindre le serveur",
+                contact_tiktok: "Suivre les démos",
+                contact_telegram: "Message avec le dev",
+                contact_note: "Pour les demandes de licence Pro ou support entreprise, privilégiez Telegram ou Discord.",
+                update_added: "Ajouté",
+                update_removed: "Retiré",
+                update_importance: "Importance",
+                loading: "Chargement..."
+            },
+            en: {
+                nav_home: "Home",
+                nav_features: "Features",
+                nav_updates: "Updates",
+                nav_media: "Media",
+                nav_pricing: "Pricing",
+                nav_contact: "Contact",
+                status_online: "System online",
+                hero_badge: "Full Control · Secure · Professional",
+                hero_subtitle: "Remote Control Suite",
+                hero_desc: "Take full control of your victims machines with the most powerful rat on the market for the moment, designed for red team hacking teams.",
+                hero_cta_features: "View features",
+                hero_cta_pricing: "View pricing",
+                stat_machines: "Features",
+                stat_uptime: "% Stability",
+                stat_ms: "ms average latency",
+                stat_clients: "Logs",
+                why_title: "Why Oblivion?",
+                why_ethical_title: "HVNC & Crypto",
+                why_ethical_desc: "Ultra advanced HVNC session with extreme speed compared to other rats and crypto wallet cracking through smart algorithm.",
+                why_fast_title: "Extreme performance",
+                why_fast_desc: "Optimised latency for extremely low ping even on degraded networks.",
+                why_secure_title: "Authentification and security",
+                why_secure_desc: "50 chars token for every login and access to panel and endpoints.",
+                why_api_title: "API",
+                why_api_desc: "Possibility to integrate oblivion in your tools for remote control.",
+                features_title: "Features",
+                features_desc: "Choose the plan that fits your needs. All features are detailed below.",
+                updates_title: "Updates",
+                updates_desc: "Complete version history and changes for Oblivion.",
+                media_title: "Media",
+                media_desc: "Screenshots and visual demonstrations of Oblivion in action.",
+                pricing_title: "Pricing",
+                pricing_desc: "Plans for every use case. No surprises, no hidden fees.",
+                pricing_strip1: "Cancel anytime",
+                pricing_strip2: "Encryption included on all plans",
+                pricing_strip3: "Free updates",
+                price_forever: "/forever",
+                price_month: "/month",
+                pricing_free_tag: "To get started and test Oblivion.",
+                pricing_medium_tag: "For growing security teams.",
+                pricing_pro_tag: "For experts and advanced auditing.",
+                featured_badge: "Recommended",
+                pf_include_free: "All Free features included",
+                pf_include_medium: "All Medium features included",
+                pf_f1: "System Info",
+                pf_f2: "Live Screen & Camera",
+                pf_f3: "Troll Options",
+                pf_f4: "File Manager",
+                pf_f5: "Reverse Shell",
+                pf_m1: "Full VNC + HVNC (Hidden Mode)",
+                pf_m2: "Process Management",
+                pf_m3: "Live Chat Panel",
+                pf_m4: "Real-time Keylogger",
+                pf_m5: "Worm Module (Propagation)",
+                pf_p1: "Auto Unlock (PIN/Passwords)",
+                pf_p2: "Crypto Cracking (Smart Algorithm)",
+                pf_p3: "Advanced Ransomware Module",
+                pf_p4: "Live Audio Control & Listening",
+                pf_p5: "Auto-Removal (0 traces)",
+                pricing_cta_free: "Start for free",
+                pricing_cta_medium: "Get Medium",
+                pricing_cta_pro: "Get Pro",
+                contact_title: "Contact",
+                contact_desc: "Join the community or contact us directly. We're here.",
+                contact_gunslol: "Main profile",
+                contact_discord: "Join the server",
+                contact_tiktok: "Follow demos",
+                contact_telegram: "DM The developper",
+                contact_note: "For Pro license requests or enterprise support, prefer Telegram or Discord.",
+                update_added: "Added",
+                update_removed: "Removed",
+                update_importance: "Importance",
+                loading: "Loading..."
+            }
+        };
+
+        let currentLang = 'fr';
+        let currentPage = 'home';
+        let featuresData = null;
+        let updatesData = null;
+        let currentTier = 'free';
+        let lightboxItems = [];
+        let lightboxIndex = 0;
+
+        // ============================================================
+        // APPLY TRANSLATIONS
+        // ============================================================
+        function applyLang(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key] !== undefined) el.textContent = i18n[lang][key];
+            });
+            document.querySelectorAll('.lang-opt').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.lang === lang);
+            });
+            // Re-render dynamic content
+            if (featuresData) renderFeatures(currentTier);
+            if (updatesData) renderUpdates();
+            // Media captions
+            document.querySelectorAll('.media-item').forEach(item => {
+                const cap = item.getAttribute('data-caption-' + lang);
+                if (cap) item.setAttribute('title', cap);
+            });
+        }
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function navigate(page) {
+            document.querySelectorAll('.page').forEach(p => {
+                p.style.display = 'none';
+                p.classList.remove('page-enter');
+            });
+            const target = document.getElementById('page-' + page);
+            if (!target) return;
+            target.style.display = 'block';
+            requestAnimationFrame(() => target.classList.add('page-enter'));
+            currentPage = page;
+            document.querySelectorAll('.menu-item-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.page === page);
+            });
+            // Lazy load
+            if (page === 'features' && !featuresData) loadFeatures();
+            if (page === 'updates' && !updatesData) loadUpdates();
+            if (page === 'home') startCounters();
+            document.getElementById('mainContent').scrollTop = 0;
+        }
+
+        // ==========================================================================
+        // TARGET CURSOR ENGINE (VANILLA JS CONVERSION)
+        // ==========================================================================
+        (function() {
+            // Ne pas charger sur les appareils mobiles
+            const isMobile = (function() {
+                const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                const isSmallScreen = window.innerWidth <= 768;
+                return hasTouchScreen && isSmallScreen;
+            })();
+            if (isMobile) return;
+
+            // Configuration
+            const CONFIG = {
+                targetSelector: '.menu-item-btn, .btn-primary, .btn-ghost, .pricing-cta, .contact-card, .tier-btn',
+                spinDuration: 2.1,
+                hoverDuration: 0.2,
+                borderWidth: 3,
+                cornerSize: 12
+            };
+
+            // Injection des éléments HTML requis pour le curseur
+            const wrapper = document.createElement('div');
+            wrapper.id = 'targetCursorWrapper';
+            wrapper.className = 'target-cursor-wrapper';
+
+            wrapper.innerHTML = `
+                <div class="target-cursor-dot"></div>
+                <div class="target-cursor-corner corner-tl"></div>
+                <div class="target-cursor-corner corner-tr"></div>
+                <div class="target-cursor-corner corner-br"></div>
+                <div class="target-cursor-corner corner-bl"></div>
+            `;
+            document.body.appendChild(wrapper);
+
+            // Sélections des nœuds créés
+            const dotNode = wrapper.querySelector('.target-cursor-dot');
+            const corners = Array.from(wrapper.querySelectorAll('.target-cursor-corner'));
+
+            let spinTl = null;
+            let activeTarget = null;
+            let targetCornerPositions = null;
+            let activeStrength = {
+                current: 0
+            };
+
+            // Initialisation de la position centrale
+            gsap.set(wrapper, {
+                xPercent: -50,
+                yPercent: -50,
+                x: window.innerWidth / 2,
+                y: window.innerHeight / 2
+            });
+
+            // Timeline de rotation infinie autonome
+            const startSpin = () => {
+                if (spinTl) spinTl.kill();
+                spinTl = gsap.timeline({
+                        repeat: -1
+                    })
+                    .to(wrapper, {
+                        rotation: '+=360',
+                        duration: CONFIG.spinDuration,
+                        ease: 'none'
+                    });
+            };
+            startSpin();
+
+            // Position initiale par défaut des coins autour du point
+            const resetCornerPositions = () => {
+                const size = CONFIG.cornerSize;
+                const positions = [{
+                    x: -size * 1.5,
+                    y: -size * 1.5
+                }, {
+                    x: size * 0.5,
+                    y: -size * 1.5
+                }, {
+                    x: size * 0.5,
+                    y: size * 0.5
+                }, {
+                    x: -size * 1.5,
+                    y: size * 0.5
+                }];
+                corners.forEach((corner, idx) => {
+                    gsap.to(corner, {
+                        x: positions[idx].x,
+                        y: positions[idx].y,
+                        duration: 0.3,
+                        ease: 'power3.out',
+                        overwrite: 'auto'
+                    });
+                });
+            };
+            resetCornerPositions();
+
+            // Gestion du tracking d'accroche par frame (Ticker GSAP)
+            const tickerFn = () => {
+                if (!targetCornerPositions || activeStrength.current === 0) return;
+
+                const cursorX = gsap.getProperty(wrapper, 'x');
+                const cursorY = gsap.getProperty(wrapper, 'y');
+
+                corners.forEach((corner, i) => {
+                    const currentX = gsap.getProperty(corner, 'x');
+                    const currentY = gsap.getProperty(corner, 'y');
+
+                    const targetX = targetCornerPositions[i].x - cursorX;
+                    const targetY = targetCornerPositions[i].y - cursorY;
+
+                    const finalX = currentX + (targetX - currentX) * activeStrength.current;
+                    const finalY = currentY + (targetY - currentY) * activeStrength.current;
+
+                    gsap.to(corner, {
+                        x: finalX,
+                        y: finalY,
+                        duration: activeStrength.current >= 0.99 ? 0.2 : 0.05,
+                        ease: 'power1.out',
+                        overwrite: 'auto'
+                    });
+                });
+            };
+
+            // Événement déplacement souris
+            window.addEventListener('mousemove', (e) => {
+                gsap.to(wrapper, {
+                    x: e.clientX,
+                    y: e.clientY,
+                    duration: 0.1,
+                    ease: 'power3.out'
+                });
+            });
+
+            // Événements Clic (MouseDown / MouseUp)
+            window.addEventListener('mousedown', () => {
+                gsap.to(dotNode, {
+                    scale: 0.7,
+                    duration: 0.3
+                });
+                gsap.to(wrapper, {
+                    scale: 0.9,
+                    duration: 0.2
+                });
+            });
+            window.addEventListener('mouseup', () => {
+                gsap.to(dotNode, {
+                    scale: 1,
+                    duration: 0.3
+                });
+                gsap.to(wrapper, {
+                    scale: 1,
+                    duration: 0.2
+                });
+            });
+
+            // Délégation globale des événements de survol (Hover Targets)
+            window.addEventListener('mouseover', (e) => {
+                const target = e.target.closest(CONFIG.targetSelector);
+                if (!target || activeTarget === target) return;
+
+                activeTarget = target;
+                corners.forEach(corner => gsap.killTweensOf(corner));
+                gsap.killTweensOf(wrapper, 'rotation');
+                if (spinTl) spinTl.pause();
+                gsap.set(wrapper, {
+                    rotation: 0
+                });
+
+                const rect = target.getBoundingClientRect();
+                const {
+                    borderWidth,
+                    cornerSize
+                } = CONFIG;
+
+                targetCornerPositions = [{
+                    x: rect.left - borderWidth,
+                    y: rect.top - borderWidth
+                }, {
+                    x: rect.right + borderWidth - cornerSize,
+                    y: rect.top - borderWidth
+                }, {
+                    x: rect.right + borderWidth - cornerSize,
+                    y: rect.bottom + borderWidth - cornerSize
+                }, {
+                    x: rect.left - borderWidth,
+                    y: rect.bottom + borderWidth - cornerSize
+                }];
+
+                gsap.ticker.add(tickerFn);
+                gsap.to(activeStrength, {
+                    current: 1,
+                    duration: CONFIG.hoverDuration,
+                    ease: 'power2.out'
+                });
+
+                // Liaison de l'événement de sortie
+                const leaveHandler = () => {
+                    gsap.ticker.remove(tickerFn);
+                    targetCornerPositions = null;
+                    gsap.set(activeStrength, {
+                        current: 0,
+                        overwrite: true
+                    });
+                    activeTarget = null;
+
+                    resetCornerPositions();
+
+                    // Reprise fluide du mouvement de rotation autonome
+                    if (spinTl) {
+                        const currentRotation = gsap.getProperty(wrapper, 'rotation');
+                        const normalizedRotation = currentRotation % 360;
+                        spinTl.kill();
+
+                        spinTl = gsap.timeline({
+                                repeat: -1
+                            })
+                            .to(wrapper, {
+                                rotation: '+=360',
+                                duration: CONFIG.spinDuration,
+                                ease: 'none'
+                            });
+
+                        gsap.to(wrapper, {
+                            rotation: normalizedRotation + 360,
+                            duration: CONFIG.spinDuration * (1 - normalizedRotation / 360),
+                            ease: 'none',
+                            onComplete: () => {
+                                spinTl.restart();
+                            }
+                        });
+                    }
+                    target.removeEventListener('mouseleave', leaveHandler);
+                };
+
+                target.addEventListener('mouseleave', leaveHandler);
+            }, {
+                passive: true
+            });
+        })();
+
+        // ============================================================
+        // HERO TERMINAL ANIMATION
+        // ============================================================
+        const termLines = [{
+            text: '> Initializing Oblivion v2.4.0...',
+            delay: 0
+        }, {
+            text: '> Establishing secure tunnel...',
+            delay: 600
+        }, {
+            text: '<span class="ansi-green">[OK]</span> TLS 1.3 handshake complete',
+            delay: 1200
+        }, {
+            text: '> Authenticating session...',
+            delay: 1800
+        }, {
+            text: '<span class="ansi-green">[OK]</span> 2FA verified — access granted',
+            delay: 2400
+        }, {
+            text: '> Downloading rootkit...',
+            delay: 3000
+        }, {
+            text: '<span class="ansi-cyan">ROOTKIT</span>  Rootkit successfully installed <span class="ansi-green">ACTIVE</span>',
+            delay: 3600
+        }, {
+            text: '<span class="ansi-cyan">CRYPTO</span>  Cracked wallet money successfully   <span class="ansi-green">RECEIVED</span>',
+            delay: 4000
+        }, {
+            text: '<span class="ansi-cyan">HVNC</span>  On victims pc  <span class="ansi-green">ONLINE</span>',
+            delay: 4400
+        }, {
+            text: '> <span class="ansi-green">Oblivion ready to hack.</span>',
+            delay: 5000
+        }];
+
+        function runTerminal() {
+            const t = document.getElementById('heroTerminal');
+            if (!t) return;
+            t.innerHTML = '';
+            termLines.forEach(line => {
+                setTimeout(() => {
+                    const d = document.createElement('div');
+                    d.className = 'term-line';
+                    d.innerHTML = line.text;
+                    t.appendChild(d);
+                    t.scrollTop = t.scrollHeight;
+                }, line.delay);
+            });
+        }
+
+        // ============================================================
+        // STAT COUNTERS
+        // ============================================================
+        let countersRun = false;
+
+        function startCounters() {
+            if (countersRun) return;
+            countersRun = true;
+            document.querySelectorAll('[data-count]').forEach(el => {
+                const target = +el.dataset.count;
+                let cur = 0;
+                const step = Math.ceil(target / 60);
+                const t = setInterval(() => {
+                    cur = Math.min(cur + step, target);
+                    el.textContent = cur.toLocaleString();
+                    if (cur >= target) clearInterval(t);
+                }, 20);
+            });
+        }
+
+        // ============================================================
+        // FEATURES
+        // ============================================================
+        async function loadFeatures() {
+            try {
+                // Remplacez par votre nom d'utilisateur, le nom du repo et le chemin du fichier
+                const url = 'https://raw.githubusercontent.com/Kodein-ParaStress/oblivionjson/refs/heads/main/features.json';
+
+                const res = await fetch(url);
+
+                if (!res.ok) throw new Error("Impossible de récupérer le fichier");
+
+                featuresData = await res.json();
+                renderFeatures('free');
+            } catch (e) {
+                document.getElementById('featuresGrid').innerHTML = '<p style="color:var(--text-muted);">Erreur de chargement.</p>';
+            }
+        }
+
+        function renderFeatures(tier) {
+            currentTier = tier;
+            const grid = document.getElementById('featuresGrid');
+            const items = featuresData[tier] || [];
+            const lang = currentLang;
+            grid.style.opacity = '0';
+            setTimeout(() => {
+                grid.innerHTML = items.map((f, i) => `
+                    <div class="feature-card" style="animation-delay:${i*60}ms">
+                        <div class="feature-icon"><i class="${f.icon}"></i></div>
+                        <h3>${f['title_'+lang]}</h3>
+                        <p>${f['desc_'+lang]}</p>
+                    </div>
+                `).join('');
+                grid.style.opacity = '1';
+            }, 200);
+        }
+
+        // ============================================================
+        // UPDATES
+        // ============================================================
+        async function loadUpdates() {
+            try {
+                // Remplacez par vos informations GitHub (Pseudo, Repo et Branche)
+                const url = 'https://raw.githubusercontent.com/Kodein-ParaStress/oblivionjson/refs/heads/main/updates.json';
+
+                const res = await fetch(url);
+
+                if (!res.ok) throw new Error("Erreur HTTP: " + res.status);
+
+                updatesData = await res.json();
+                renderUpdates();
+            } catch (e) {
+                document.getElementById('updatesList').innerHTML = '<p style="color:var(--text-muted);">Erreur de chargement.</p>';
+            }
+        }
+
+        function renderUpdates() {
+            const lang = currentLang;
+            const t = i18n[lang];
+            const list = document.getElementById('updatesList');
+            list.innerHTML = updatesData.map((u, i) => {
+                        const stars = Array.from({
+                            length: 5
+                        }, (_, s) => `<i class="fa-star ${s < u.importance ? 'fa-solid star-filled' : 'fa-regular star-empty'}"></i>`).join('');
+                        const added = u['added_' + lang].map(a => `<li><i class="fa-solid fa-plus"></i> ${a}</li>`).join('');
+                        const removed = u['removed_' + lang].map(r => `<li><i class="fa-solid fa-minus"></i> ${r}</li>`).join('');
+                        return `
+                    <div class="update-card" style="animation-delay:${i*80}ms">
+                        <div class="update-header">
+                            <div class="update-version-block">
+                                <span class="update-version">v${u.version}</span>
+                                <span class="update-date">${u['date_'+lang]}</span>
+                            </div>
+                            <div class="update-stars" title="${t.update_importance}: ${u.importance}/5">${stars}</div>
+                        </div>
+                        <h3 class="update-title">${u['title_'+lang]}</h3>
+                        <p class="update-desc">${u['desc_'+lang]}</p>
+                        ${added ? `<div class="update-section added"><h4><i class="fa-solid fa-circle-plus"></i> ${t.update_added}</h4><ul>${added}</ul></div>` : ''}
+                        ${removed ? `<div class="update-section removed"><h4><i class="fa-solid fa-circle-minus"></i> ${t.update_removed}</h4><ul>${removed}</ul></div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================
+        // MEDIA LIGHTBOX
+        // ============================================================
+        function initMedia() {
+            lightboxItems = Array.from(document.querySelectorAll('.media-item'));
+            lightboxItems.forEach((item, i) => {
+                item.addEventListener('click', () => openLightbox(i));
+            });
+            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+            document.getElementById('lightboxPrev').addEventListener('click', () => moveLightbox(-1));
+            document.getElementById('lightboxNext').addEventListener('click', () => moveLightbox(1));
+            document.getElementById('lightbox').addEventListener('click', e => {
+                if (e.target === document.getElementById('lightbox')) closeLightbox();
+            });
+            document.addEventListener('keydown', e => {
+                if (!document.getElementById('lightbox').classList.contains('open')) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') moveLightbox(-1);
+                if (e.key === 'ArrowRight') moveLightbox(1);
+            });
+        }
+        
+        function openLightbox(i) {
+            lightboxIndex = i;
+            const item = lightboxItems[i];
+            const img = document.getElementById('lightboxImg');
+            
+            // Cette ligne a été supprimée car l'élément HTML n'existe plus
+            // const cap = document.getElementById('lightboxCaption'); 
+            
+            img.src = item.dataset.src;
+            
+            // Cette ligne a été supprimée pour éviter l'erreur TypeError
+            // cap.textContent = item.getAttribute('data-caption-'+currentLang) || ''; 
+            
+            document.getElementById('lightbox').classList.add('open');
+        }
+        
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+        
+        function moveLightbox(dir) {
+            lightboxIndex = (lightboxIndex + dir + lightboxItems.length) % lightboxItems.length;
+            openLightbox(lightboxIndex);
+        }
+
+        // ============================================================
+        // EVENTS
+        // ============================================================
+        document.querySelectorAll('.menu-item-btn').forEach(btn => {
+            btn.addEventListener('click', () => navigate(btn.dataset.page));
+        });
+        document.querySelectorAll('[data-page-link]').forEach(btn => {
+            btn.addEventListener('click', () => navigate(btn.dataset.pageLink));
+        });
+        document.querySelectorAll('.tier-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tier-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderFeatures(btn.dataset.tier);
+            });
+        });
+        document.querySelectorAll('.lang-opt').forEach(opt => {
+            opt.addEventListener('click', () => applyLang(opt.dataset.lang));
+        });
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        runTerminal();
+        startCounters();
+        initMedia();
+        applyLang('fr');
+        navigate('home');
+    </script>
+</body>
+
+</html>

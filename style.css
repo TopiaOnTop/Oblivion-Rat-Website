@@ -1,0 +1,2305 @@
+body,
+a,
+button,
+input,
+[role="button"] {
+    cursor: none !important;
+}
+
+:root {
+    --bg-darker: #020604;
+    --bg-panel: rgba(4, 14, 8, 0.75);
+    --green-primary: #00e676;
+    --green-subtle: rgba(0, 230, 118, 0.08);
+    --border-color: rgba(0, 230, 118, 0.15);
+    --text-primary: #ffffff;
+    --text-secondary: #b3c6b8;
+    --text-muted: #627d69;
+    --danger: #ff3366;
+    --sidebar-width: 250px;
+}
+
+body {
+    background-color: var(--bg-darker);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+/* Menu Mobile */
+
+.vnc-mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(2, 6, 4, 0.95);
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1001;
+    justify-content: space-between;
+}
+
+.vnc-mobile-bar-btn {
+    background: transparent;
+    border: 1px solid var(--green-primary);
+    color: var(--green-primary);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.viewport-panel {
+    display: none !important;
+}
+
+.viewport-panel.active {
+    display: block !important;
+    /* On repasse en block pour laisser la structure interne gérer sa taille */
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+
+/* --- LA GRANDE BOÎTE PRINCIPALE NOIRE & VERTE --- */
+
+#infos .control-vnc-container {
+    background: rgba(4, 8, 4, 0.85);
+    /* Fond noir profond avec reflet vert */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid #00e676;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.15), inset 0 0 15px rgba(0, 230, 118, 0.05);
+    /* On transforme l'intérieur en Grille */
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* Grille ultra-flexible de 6 colonnes */
+    gap: 25px;
+}
+
+
+/* --- TITRES DES CATÉGORIES (BALISES H3) --- */
+
+#infos .control-vnc-container h3 {
+    grid-column: span 6;
+    /* Par défaut, un titre prend toute la largeur */
+    margin: 10px 0 5px 0;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #00ff77;
+    text-shadow: 0 0 8px rgba(0, 255, 119, 0.5);
+    border-bottom: 2px solid rgba(0, 230, 118, 0.2);
+    padding-bottom: 8px;
+}
+
+
+/* --- STYLE DU TABLEAU DES PROCESSUS --- */
+
+.process-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+}
+
+.process-table th {
+    position: sticky;
+    top: 0;
+    background: #040804;
+    color: #a0aec0;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.3);
+    z-index: 2;
+}
+
+.process-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    transition: background 0.2s ease;
+}
+
+.process-table tr:hover {
+    background: rgba(0, 230, 118, 0.04);
+}
+
+.process-table td {
+    padding: 10px 12px;
+    color: #ffffff;
+    font-family: 'Consolas', 'Courier New', monospace;
+    vertical-align: middle;
+}
+
+
+/* Coloration spécifique pour les noms et PID */
+
+.process-table td:first-child {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.process-name-spec {
+    color: #00ff77 !important;
+    /* Met en valeur le nom du processus */
+}
+
+
+/* Bouton Kill Rouge Électrique */
+
+.btn-kill-proc {
+    background: rgba(239, 83, 80, 0.1);
+    border: 1px solid #ef5350;
+    color: #ef5350;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.btn-kill-proc:hover {
+    background: #ef5350;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(239, 83, 80, 0.5);
+}
+
+
+/* Customisation de la Scrollbar interne pour rester raccord */
+
+.vnc-scrollable-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.vnc-scrollable-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.vnc-scrollable-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 230, 118, 0.3);
+    border-radius: 4px;
+}
+
+.vnc-scrollable-list::-webkit-scrollbar-thumb:hover {
+    background: #00ff77;
+}
+
+
+/* --- RE-RÉGLAGE DE L'ORGANISATION DES LIGNES (VNC-TELEMETRY-ROW) --- */
+
+#infos .vnc-telemetry-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 230, 118, 0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    transition: all 0.2s ease;
+}
+
+
+/* Effet glow discret au survol d'une case */
+
+#infos .vnc-telemetry-row:hover {
+    border-color: #00ff77;
+    box-shadow: 0 0 10px rgba(0, 255, 119, 0.2);
+    background: rgba(0, 230, 118, 0.03);
+}
+
+
+/* Style des textes internes */
+
+#infos .vnc-telemetry-row span:first-child {
+    color: #a0aec0;
+    font-weight: 600;
+}
+
+#infos .vnc-telemetry-row span:last-child {
+    color: #00ff77;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 700;
+    text-shadow: 0 0 4px rgba(0, 255, 119, 0.3);
+}
+
+
+/* --- ASSIGNATION DES PLACES (LES COINS & LES BLOCS) --- */
+
+
+/* 1. Les deux premières grosses catégories (Hardware & Environment) -> 2 Gros Blocs (3 colonnes chacun) */
+
+#infos h3:nth-of-type(1)~.vnc-telemetry-row:nth-of-type(-n+4),
+
+/* CPU à Storage */
+
+#infos h3:nth-of-type(2)~.vnc-telemetry-row:nth-of-type(n+5):nth-of-type(-n+9) {
+    /* Hostname à Antivirus */
+    grid-column: span 3;
+}
+
+
+/* 2. Les catégories d'après (VPN, Tor, Gov, Crypto) -> 1 Case individuelle par info (2 colonnes chacune -> 3 par ligne) */
+
+#infos h3:nth-of-type(3)~.vnc-telemetry-row:nth-of-type(n+10):nth-of-type(-n+12),
+
+/* VPN, Tor, Gov */
+
+#infos h3:nth-of-type(4)~.vnc-telemetry-row:nth-of-type(13) {
+    /* Crypto */
+    grid-column: span 2;
+}
+
+
+/* 3. Infos de connexion tout en bas -> Étalées proprement sur 2 colonnes chacune */
+
+#infos h3:nth-of-type(5)~.vnc-telemetry-row:nth-of-type(n+14) {
+    grid-column: span 2;
+}
+
+
+/* --- FORCER LE BOUTON ONLINE EN VERT FIXE --- */
+
+#stat-status {
+    color: #00ff77 !important;
+}
+
+
+/* --- RESPONSIVE MOBILE SANS CASSER LA GRILLE --- */
+
+@media (max-width: 900px) {
+    #infos .control-vnc-container {
+        grid-template-columns: 1fr;
+    }
+    #infos h3,
+    #infos .vnc-telemetry-row {
+        grid-column: span 1 !important;
+    }
+}
+
+
+/* Sidebar Structure */
+
+.control-sidebar {
+    width: var(--sidebar-width);
+    background: rgba(1, 5, 2, 0.98);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 14px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar-brand {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 8px;
+}
+
+.sidebar-brand i {
+    color: var(--green-primary);
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.menu-item-btn i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.menu-item-btn:hover {
+    color: var(--green-primary);
+    background: rgba(0, 230, 118, 0.02);
+}
+
+.menu-item-btn.active {
+    color: var(--text-primary);
+    border-color: var(--green-primary);
+    background: var(--green-subtle);
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.1);
+}
+
+.menu-item-btn.active i {
+    color: var(--green-primary);
+}
+
+
+/* Main Workspace Section */
+
+.control-main-viewport {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.viewport-panel {
+    display: none;
+    animation: panelFade 0.25s ease-out forwards;
+}
+
+.viewport-panel.active {
+    display: block;
+}
+
+@keyframes panelFade {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Containers matching control-styles.css structural schemas */
+
+.control-vnc-container {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.control-vnc-container h3 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.vnc-telemetry-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.05);
+    font-size: 14px;
+}
+
+.vnc-telemetry-row span:last-child {
+    color: var(--green-primary);
+    font-weight: 600;
+}
+
+.control-vnc-screen {
+    width: 100%;
+    max-width: 640px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: #000;
+    display: block;
+}
+
+.vnc-grid-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+
+/* Buttons matching definitions from control-styles.css */
+
+.vnc-kbd-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: rgba(0, 230, 118, 0.02);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+.vnc-kbd-btn:hover {
+    background: var(--green-subtle);
+    border-color: var(--green-primary);
+    color: var(--green-primary);
+}
+
+.vnc-kbd-btn:active {
+    transform: scale(0.98);
+}
+
+.vnc-kbd-btn.btn-danger {
+    border-color: var(--danger);
+    color: #fff;
+}
+
+.vnc-kbd-btn.btn-danger:hover {
+    background: rgba(255, 51, 102, 0.1);
+    color: var(--danger);
+}
+
+#screen-view {
+    image-rendering: -webkit-optimize-contrast;
+    /* Pour les navigateurs basés sur Chromium / Safari */
+    image-rendering: crisp-edges;
+    /* Pour Firefox */
+}
+
+.vnc-text-input {
+    width: 100%;
+    background: #010402;
+    border: 1px solid var(--border-color);
+    color: var(--green-primary);
+    padding: 14px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.vnc-text-input:focus {
+    border-color: var(--green-primary);
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.15);
+}
+
+.shell-terminal-view {
+    background: #000;
+    border: 1px solid rgba(0, 230, 118, 0.1);
+    border-radius: 10px;
+    padding: 14px;
+    min-height: 160px;
+    max-height: 280px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: 'Consolas', monospace;
+    font-size: 13px;
+    color: #a6ffd2;
+    margin-top: 12px;
+}
+
+.mic-mode-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    flex: 1;
+    /* Aligne les boutons proprement sur toute la largeur */
+    outline: none;
+}
+
+.mic-mode-btn:hover {
+    background: rgba(0, 230, 118, 0.08);
+    border-color: rgba(0, 230, 118, 0.5);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.15);
+}
+
+.mic-mode-btn.active {
+    background: rgba(0, 230, 118, 0.15);
+    border-color: var(--green-primary);
+    color: var(--green-primary);
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.3), inset 0 0 6px rgba(0, 230, 118, 0.2);
+}
+
+.vnc-chat-viewport {
+    height: 240px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(0, 230, 118, 0.05);
+}
+
+.chat-bubble {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.chat-bubble.local-sender {
+    background: rgba(0, 230, 118, 0.12);
+    border: 1px solid var(--border-color);
+    margin-left: auto;
+    color: #fff;
+}
+
+.chat-bubble.remote-sender {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin-right: auto;
+}
+
+.vnc-scrollable-list {
+    max-height: 280px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 230, 118, 0.05);
+}
+
+.vnc-list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.04);
+    font-size: 13px;
+}
+
+.file-system-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.04);
+}
+
+.folder-link {
+    color: #ffb300;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.file-link {
+    color: #29b6f6;
+    word-break: break-all;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.action-button-group {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.action-mini-btn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: #fff;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.vnc-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.vnc-modal-wrapper {
+    background: #040c06;
+    border: 1px solid var(--green-primary);
+    width: 100%;
+    max-width: 550px;
+    padding: 24px;
+    border-radius: 14px;
+}
+
+.vnc-modal-body {
+    max-height: 260px;
+    overflow-y: auto;
+    background: #000;
+    color: var(--green-primary);
+    padding: 14px;
+    font-family: 'Consolas', monospace;
+    white-space: pre-wrap;
+    font-size: 13px;
+    border: 1px solid rgba(0, 230, 118, 0.15);
+    border-radius: 8px;
+}
+
+
+/* Media adjustments for screens smaller than 768px */
+
+@media (max-width: 768px) {
+    .vnc-mobile-nav {
+        display: flex;
+    }
+    .control-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+        padding-top: 80px;
+    }
+    .control-sidebar.open {
+        transform: translateX(0);
+    }
+    .control-main-viewport {
+        padding: 90px 16px 30px 16px;
+    }
+}
+
+
+/* Container de la grille du Hub */
+
+.hub-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+
+/* Style de chaque carte de raccourci */
+
+.hub-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Effet Hover Cyberpunk */
+
+.hub-card:hover {
+    background: rgba(0, 255, 136, 0.03);
+    border-color: var(--green-primary, #00e676);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.05);
+}
+
+
+/* Zone Icône */
+
+.hub-card-icon {
+    font-size: 20px;
+    color: var(--green-primary, #00e676);
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+}
+
+
+/* Textes à l'intérieur de la carte */
+
+.hub-card-content h4 {
+    color: #fff;
+    font-size: 14px;
+    margin: 0 0 4px 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+}
+
+.hub-card-content p {
+    color: #777;
+    font-size: 12px;
+    margin: 0;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.4;
+}
+
+.troll-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    /* Boîtes plus larges par défaut */
+    gap: 24px;
+    /* Plus d'espace entre les cartes */
+    margin: 40px auto 0 auto;
+    /* Centre la grille au milieu */
+    max-width: 1200px;
+    /* Prend un maximum de place à l'écran */
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+
+/* Grandes cartes cliquables au milieu */
+
+.troll-hub-card {
+    background: rgba(4, 14, 8, 0.6) !important;
+    border: 1.5px solid rgba(0, 230, 118, 0.2) !important;
+    /* Bordure plus visible */
+    border-radius: 16px;
+    /* Coins plus arrondis pour les grands blocs */
+    padding: 30px 24px;
+    /* Padding augmenté pour agrandir les boîtes */
+    display: flex;
+    gap: 20px;
+    /* Plus d'espace entre l'icône et le texte */
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.troll-hub-card:hover {
+    background: rgba(0, 230, 118, 0.08) !important;
+    border-color: #00e676 !important;
+    transform: translateY(-4px);
+    /* Effet de lévitation accentué */
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+    /* Glow vert plus imposant */
+}
+
+
+/* Grandes icônes */
+
+.troll-hub-card-icon {
+    font-size: 32px;
+    /* Icône beaucoup plus grande */
+    color: #00e676;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+}
+
+
+/* Titres des cartes */
+
+.troll-hub-card-content h4 {
+    color: #ffffff;
+    font-size: 16px;
+    /* Texte plus grand */
+    margin: 0 0 6px 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+
+/* Descriptions des cartes */
+
+.troll-hub-card-content p {
+    color: #b3c6b8;
+    font-size: 13px;
+    /* Description plus lisible */
+    margin: 0;
+    line-height: 1.4;
+}
+
+
+/* Structure des fenêtres surgissantes (Popups) */
+
+.troll-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(2, 6, 4, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    /* Géré par JS */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.troll-popup-wrapper {
+    background: #020604 !important;
+    border: 1.5px solid #00e676 !important;
+    box-shadow: 0 0 30px rgba(0, 230, 118, 0.35);
+    width: 100%;
+    max-width: 480px;
+    padding: 24px;
+    border-radius: 16px;
+    box-sizing: border-box;
+    animation: trollPopupOpen 0.2s ease-out forwards;
+}
+
+.troll-popup-wrapper h3 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #00ff77;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.2);
+    padding-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+
+/* Animation propre aux popups */
+
+@keyframes trollPopupOpen {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+
+/* Alignement au milieu de l'écran */
+
+.file-grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+
+/* Grand bloc calqué sur le style Troll */
+
+.file-hub-card-large {
+    background: rgba(4, 14, 8, 0.6) !important;
+    border: 1.5px solid rgba(0, 230, 118, 0.2) !important;
+    border-radius: 16px;
+    padding: 30px;
+    width: 100%;
+    max-width: 900px;
+    /* Largeur confortable pour l'affichage des colonnes de fichiers */
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+/* En-tête du gestionnaire */
+
+.file-card-header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.15);
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+}
+
+.file-hub-card-icon {
+    font-size: 32px;
+    color: #00e676;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+}
+
+.file-hub-card-content h4 {
+    color: #ffffff;
+    font-size: 16px;
+    margin: 0 0 6px 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.file-hub-card-content p {
+    color: #b3c6b8;
+    font-size: 13px;
+    margin: 0;
+}
+
+
+/* Style de l'affichage du chemin actuel */
+
+.file-path-highlight {
+    color: #00e676 !important;
+    font-family: 'Consolas', monospace;
+    font-weight: 600;
+    word-break: break-all;
+}
+
+
+/* Fenêtre de la liste des fichiers (Conteneur scrollable) */
+
+.file-scrollable-list {
+    background: rgba(2, 10, 5, 0.4) !important;
+    border: 1px solid rgba(0, 230, 118, 0.2) !important;
+    border-radius: 12px;
+    max-height: 380px;
+    height: 380px;
+    overflow-y: auto;
+    padding: 8px;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 20px rgba(0, 230, 118, 0.05);
+}
+
+
+/* Section bouton du bas */
+
+.file-action-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+/* Bouton upload au look bleu néon d'origine mais adapté à la charte */
+
+.file-btn-upload {
+    background: transparent;
+    border: 1.5px solid #29b6f6 !important;
+    color: #29b6f6 !important;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.file-btn-upload:hover {
+    background: rgba(41, 182, 246, 0.08) !important;
+    box-shadow: 0 0 15px rgba(41, 182, 246, 0.25);
+    transform: translateY(-1px);
+}
+
+
+/* --- COMPOSANTS INTERNES DU FICHIER ET MODAL PREVIEW --- */
+
+
+/* Ligne d'un élément (Fichier ou Dossier) - Smooth & Glowy */
+
+.file-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.file-item-row:hover {
+    background: rgba(0, 230, 118, 0.05) !important;
+    border-color: rgba(0, 230, 118, 0.3) !important;
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.1);
+    transform: translateX(4px);
+    /* Léger décalage fluide */
+}
+
+
+/* Lien texte des fichiers/dossiers */
+
+.file-item-link {
+    color: #e3ebd6;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.file-item-link.folder-link {
+    cursor: pointer;
+    color: #00ff88;
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.2);
+}
+
+.file-item-link.folder-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+    text-decoration: none;
+    /* Remplacé par l'effet glow */
+}
+
+
+/* Groupe de boutons d'actions */
+
+.file-item-actions {
+    display: flex;
+    gap: 6px;
+}
+
+
+/* Petits boutons d'action du gestionnaire (Style Gélule Néon) */
+
+.file-mini-btn {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #b3c6b8 !important;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+    /* Forme arrondie capsule */
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.file-mini-btn:hover {
+    border-color: #ffffff !important;
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.file-mini-btn.btn-success:hover {
+    border-color: #00e676 !important;
+    color: #ffffff !important;
+    background: rgba(0, 230, 118, 0.15);
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+}
+
+.file-mini-btn.btn-danger {
+    border-color: rgba(255, 23, 68, 0.3) !important;
+    color: #ff3d60 !important;
+}
+
+.file-mini-btn.btn-danger:hover {
+    border-color: #ff1744 !important;
+    color: #ffffff !important;
+    background: rgba(255, 23, 68, 0.2);
+    box-shadow: 0 0 12px rgba(255, 23, 68, 0.4);
+}
+
+
+/* --- STRUCTURE DE LA POPUP DE PREVIEW --- */
+
+#preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(2, 6, 4, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.preview-modal-wrapper {
+    background: #020604 !important;
+    border: 1.5px solid #29b6f6 !important;
+    /* Thème bleu pour la preview */
+    box-shadow: 0 0 30px rgba(41, 182, 246, 0.25);
+    width: 100%;
+    max-width: 750px;
+    padding: 24px;
+    border-radius: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#modal-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #29b6f6;
+    border-bottom: 1px solid rgba(41, 182, 246, 0.2);
+    padding-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+
+/* Zone interne de lecture du fichier (Preview Glowy) */
+
+#modal-content-area,
+.file-preview-body {
+    background: rgba(2, 6, 4, 0.6) !important;
+    border: 1px solid rgba(0, 230, 118, 0.25) !important;
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+    padding: 16px;
+    height: 380px;
+    overflow-y: auto;
+    color: #d1e2f1;
+    font-family: 'Consolas', monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 20px rgba(0, 230, 118, 0.08);
+}
+
+
+/* --- STYLE UNIQUE ET ISOLÉ DU PANEL APPS (PROCESSUS) --- */
+
+
+/* Alignement géant au milieu de l'écran */
+
+.apps-grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+
+/* Grand bloc principal calqué sur le style Troll/Files */
+
+.apps-hub-card-large {
+    background: rgba(4, 14, 8, 0.6) !important;
+    border: 1.5px solid rgba(0, 230, 118, 0.2) !important;
+    border-radius: 16px;
+    padding: 30px;
+    width: 100%;
+    max-width: 1000px;
+    /* Légèrement plus large pour le tableau à 5 colonnes */
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+/* En-tête aligné */
+
+.apps-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.15);
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+}
+
+.apps-header-left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.apps-hub-card-icon {
+    font-size: 32px;
+    color: #00e676;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+}
+
+.apps-hub-card-content h4 {
+    color: #ffffff;
+    font-size: 16px;
+    margin: 0 0 6px 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.apps-hub-card-content p {
+    color: #b3c6b8;
+    font-size: 13px;
+    margin: 0;
+}
+
+
+/* Compteur de processus néon */
+
+.apps-count-badge {
+    color: #00ff88 !important;
+    font-family: 'Consolas', monospace;
+    font-weight: bold;
+    font-size: 14px;
+    background: rgba(0, 230, 118, 0.08);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 230, 118, 0.2);
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+}
+
+
+/* Conteneur de la table scrollable (Smooth Glass) */
+
+.apps-scrollable-container {
+    background: rgba(2, 10, 5, 0.4) !important;
+    border: 1px solid rgba(0, 230, 118, 0.2) !important;
+    border-radius: 12px;
+    max-height: 450px;
+    height: 450px;
+    overflow-y: auto;
+    padding: 6px;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 20px rgba(0, 230, 118, 0.05);
+}
+
+
+/* --- STRUCTURE ET DESIGN DU TABLEAU INTERNE --- */
+
+.apps-process-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    /* Espace entre les lignes pour l'effet smooth */
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.apps-process-table th {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+
+/* Lignes de données (Glow & Transition au survol) */
+
+.apps-process-table tbody tr {
+    background: rgba(255, 255, 255, 0.01);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apps-process-table tbody tr:hover {
+    background: rgba(0, 230, 118, 0.05) !important;
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.1);
+}
+
+.apps-process-table td {
+    padding: 12px 16px;
+    color: #e3ebd6;
+    font-size: 13.5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+
+/* Arrondir les angles de chaque ligne individuellement */
+
+.apps-process-table td:first-child {
+    border-left: 1px solid rgba(255, 255, 255, 0.02);
+    border-radius: 10px 0 0 10px;
+    font-family: 'Consolas', monospace;
+    /* Nom du process et PID restent propres */
+    font-weight: 600;
+}
+
+.apps-process-table td:last-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.02);
+    border-radius: 0 10px 10px 0;
+}
+
+
+/* --- LOGIQUE DES BOUTONS INTERNES (Capsules) --- */
+
+.apps-mini-btn {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 23, 68, 0.3) !important;
+    color: #ff3d60 !important;
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+    /* Forme gélule */
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apps-mini-btn:hover {
+    border-color: #ff1744 !important;
+    color: #ffffff !important;
+    background: rgba(255, 23, 68, 0.2);
+    box-shadow: 0 0 12px rgba(255, 23, 68, 0.4);
+    transform: scale(1.03);
+}
+
+
+/* --- STYLE UNIQUE ET ISOLÉ DU PANEL CREDITS --- */
+
+.cred-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+    margin: 40px auto 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+    align-items: start;
+}
+
+
+/* Base de la carte style Glassmorphism */
+
+.cred-hub-card {
+    background: rgba(4, 14, 8, 0.5) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1.5px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* --- VARIATIONS DE GLOWS ET HOVERS --- */
+
+
+/* Vert (Auteur) */
+
+.cred-glow-green {
+    border-color: rgba(0, 230, 118, 0.15) !important;
+}
+
+.cred-glow-green:hover {
+    border-color: #00e676 !important;
+    box-shadow: 0 8px 25px rgba(0, 230, 118, 0.15);
+    background: rgba(0, 230, 118, 0.04) !important;
+    transform: translateY(-4px);
+}
+
+.cred-glow-green .cred-hub-card-icon {
+    color: #00e676;
+    text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+}
+
+
+/* Bleu (Réseaux) */
+
+.cred-glow-blue {
+    border-color: rgba(41, 182, 246, 0.15) !important;
+}
+
+.cred-glow-blue:hover {
+    border-color: #29b6f6 !important;
+    box-shadow: 0 8px 25px rgba(41, 182, 246, 0.15);
+    background: rgba(41, 182, 246, 0.04) !important;
+    transform: translateY(-4px);
+}
+
+.cred-glow-blue .cred-hub-card-icon {
+    color: #29b6f6;
+    text-shadow: 0 0 10px rgba(41, 182, 246, 0.3);
+}
+
+
+/* Or / Jaune (Crypto) */
+
+.cred-glow-gold {
+    border-color: rgba(255, 202, 40, 0.15) !important;
+}
+
+.cred-glow-gold:hover {
+    border-color: #ffca28 !important;
+    box-shadow: 0 8px 25px rgba(255, 202, 40, 0.15);
+    background: rgba(255, 202, 40, 0.04) !important;
+    transform: translateY(-4px);
+}
+
+.cred-glow-gold .cred-hub-card-icon {
+    color: #ffca28;
+    text-shadow: 0 0 10px rgba(255, 202, 40, 0.3);
+}
+
+
+/* --- CONTENU INTERNE DES CARTES --- */
+
+.cred-hub-card-icon {
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+}
+
+.cred-hub-card-content h4 {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* Section Créateur */
+
+.cred-author {
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.cred-desc {
+    color: #b3c6b8;
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.5;
+}
+
+
+/* Section Réseaux Sociaux */
+
+.cred-social-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cred-social-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: #e3ebd6;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 10px 14px;
+    border-radius: 10px;
+    /* Style gélule smooth */
+}
+
+.cred-social-item i {
+    font-size: 16px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.cred-social-item .icon-gun {
+    color: #ff5252;
+}
+
+.cred-social-item .icon-tg {
+    color: #0088cc;
+}
+
+.cred-social-item .icon-dc {
+    color: #5865f2;
+}
+
+.cred-val {
+    color: #ffffff;
+    font-weight: 600;
+    font-family: 'Consolas', monospace;
+    margin-left: auto;
+}
+
+
+/* Section Crypto & Dons */
+
+.cred-crypto-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cred-crypto-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.cred-crypto-item i {
+    font-size: 22px;
+    min-width: 30px;
+    text-align: center;
+}
+
+.cred-crypto-item .fa-bitcoin {
+    color: #f2a900;
+}
+
+.cred-crypto-item .fa-coins {
+    color: #bebebe;
+}
+
+.cred-crypto-item .fa-paypal {
+    color: #00457c;
+}
+
+.cred-crypto-item .label {
+    display: block;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.cred-crypto-item .address {
+    display: block;
+    font-size: 12px;
+    color: #ffffff;
+    font-family: 'Consolas', monospace;
+    word-break: break-all;
+    user-select: all;
+    /* Permet de triple-cliquer pour copier direct */
+}
+
+.target-cursor-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+}
+
+
+/* Le point central */
+
+.target-cursor-dot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    background: #00ff00;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    box-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00;
+}
+
+
+/* Transformation des 4 coins en petits points */
+
+.target-cursor-corner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    background: #00ff00;
+    border-radius: 50%;
+    /* Rend les coins ronds */
+    will-change: transform;
+    /* Effet glow vert hacker */
+    box-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00, 0 0 20px #00ff00;
+}
+
+
+/* Positionnement initial des points autour du centre */
+
+.corner-tl {
+    transform: translate(-250%, -250%);
+}
+
+.corner-tr {
+    transform: translate(150%, -250%);
+}
+
+.corner-br {
+    transform: translate(150%, 150%);
+}
+
+.corner-bl {
+    transform: translate(-250%, 150%);
+}
+
+.bf-section-wrap {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.bf-card input.vnc-text-input {
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+
+#bfLogOutput::-webkit-scrollbar {
+    width: 6px;
+}
+
+#bfLogOutput::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#bfLogOutput::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#bfLogOutput::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+
+/* Style du conteneur global du champ de fichier */
+
+input[type="file"].vnc-text-input {
+    color: var(--text-muted);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+
+/* Style du bouton "Choisir un fichier" à l'intérieur de l'input */
+
+input[type="file"].vnc-text-input::file-selector-button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: #e0e0e0;
+    padding: 4px 10px;
+    margin-right: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+
+/* Effet Hover sur le bouton de sélection */
+
+input[type="file"].vnc-text-input::file-selector-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* Conteneur pour positionner le popup */
+
+.vnc-info-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+
+/* Icône d'information */
+
+.vnc-info-icon {
+    color: var(--text-muted);
+    cursor: help;
+    font-size: 13px;
+    transition: color 0.2s ease;
+}
+
+.vnc-info-icon:hover {
+    color: var(--green-primary);
+}
+
+
+/* Style du Popup */
+
+.vnc-info-popup {
+    display: none;
+    position: absolute;
+    bottom: 125%;
+    /* Aligné au-dessus de l'icône */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 10, 15, 0.95);
+    border: 1px solid var(--border-color);
+    padding: 10px 14px;
+    border-radius: 8px;
+    width: 260px;
+    font-size: 12px;
+    color: #e0e0e0;
+    line-height: 1.4;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    z-index: 100;
+}
+
+
+/* Flèche du popup */
+
+.vnc-info-popup::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--border-color) transparent transparent transparent;
+}
+
+
+/* Affichage au survol */
+
+.vnc-info-container:hover .vnc-info-popup {
+    display: block;
+}
+
+
+/* --- ALIGNEMENT DU BLOC PING DANS LA GRILLE --- */
+
+#infos h3:nth-of-type(4)~.vnc-telemetry-row:nth-of-type(14) {
+    grid-column: span 2;
+}
+
+
+/* --- CLASSES D'ÉTATS DYNAMIQUES POUR LE TEXTE (PING) --- */
+
+
+/* État Vert : Moins de 30ms (Stable / Fluide) */
+
+.ping-low {
+    color: #00ff77 !important;
+    text-shadow: 0 0 10px rgba(0, 255, 119, 0.65);
+    transition: all 0.2s ease;
+}
+
+
+/* État Jaune : Entre 30ms et 100ms (Normal) */
+
+.ping-medium {
+    color: #ffb300 !important;
+    text-shadow: 0 0 8px rgba(255, 179, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+
+/* État Rouge : Supérieur à 100ms (Critique / Ralentissement) */
+
+.ping-high {
+    color: #ff3366 !important;
+    text-shadow: 0 0 12px rgba(255, 51, 102, 0.7);
+    animation: ping-alert 1s ease-in-out infinite alternate;
+    transition: all 0.2s ease;
+}
+
+
+/* --- ANIMATION DE PULSATION DISCRÈTE EN CAS DE REBOND ROUGE --- */
+
+@keyframes ping-alert {
+    from {
+        text-shadow: 0 0 4px rgba(255, 51, 102, 0.4);
+    }
+    to {
+        text-shadow: 0 0 14px rgba(255, 51, 102, 0.8);
+    }
+}
+
+
+/* --- SÉCURITÉ RESPONSIVE POUR MOBILE --- */
+
+@media (max-width: 900px) {
+    #infos h3:nth-of-type(4)~.vnc-telemetry-row:nth-of-type(14) {
+        grid-column: span 1 !important;
+    }
+}
+
+
+/* ==========================================================================
+--- STYLE DU PANNEAU NETWORK & GRID ---
+========================================================================== */
+
+.network-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(0, 230, 118, 0.2);
+    padding-bottom: 12px;
+    margin-bottom: 25px;
+}
+
+.network-header h3 {
+    border-bottom: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.scan-btn {
+    max-width: 180px;
+    height: 38px !important;
+    border-color: #00e676 !important;
+    color: #00e676 !important;
+    background: rgba(0, 230, 118, 0.05) !important;
+}
+
+.scan-btn:hover {
+    box-shadow: 0 0 12px rgba(0, 230, 118, 0.3);
+}
+
+.network-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.network-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    min-height: 200px;
+}
+
+
+/* Cartes des PC */
+
+.device-card {
+    background: rgba(4, 14, 8, 0.6);
+    border: 1.5px solid rgba(0, 230, 118, 0.15);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.device-card:hover {
+    border-color: #00e676;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.15);
+    background: rgba(0, 230, 118, 0.03);
+}
+
+
+/* Icône PC Cyber */
+
+.device-icon-wrapper {
+    font-size: 40px;
+    color: #00ff77;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(0, 255, 119, 0.4);
+    position: relative;
+}
+
+
+/* Badge connecté clignotant */
+
+.device-status-dot {
+    position: absolute;
+    top: 2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: #00e676;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00e676;
+    animation: devicePulse 2s infinite;
+}
+
+.device-ip {
+    font-family: 'Consolas', monospace;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.device-hostname {
+    color: #b3c6b8;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* Placeholders et chargements */
+
+.network-placeholder {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #627d69;
+    font-size: 14px;
+    gap: 12px;
+    padding: 40px 0;
+}
+
+.network-placeholder i {
+    font-size: 24px;
+    color: rgba(0, 230, 118, 0.4);
+}
+
+@keyframes devicePulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(0, 230, 118, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 230, 118, 0);
+    }
+}
+
+
+/* ==========================================================================
+--- SIDEBAR DE CONFIGURATION SSH ---
+========================================================================== */
+
+.ssh-sidebar-panel {
+    width: 0;
+    max-width: 320px;
+    background: rgba(4, 14, 8, 0.85);
+    border: 1px solid rgba(0, 230, 118, 0);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    backdrop-filter: blur(10px);
+}
+
+.ssh-sidebar-panel.open {
+    width: 320px;
+    padding: 20px;
+    border-color: rgba(0, 230, 118, 0.3);
+    opacity: 1;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.05);
+}
+
+.ssh-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 10px;
+}
+
+.ssh-panel-header h4 {
+    margin: 0;
+    color: #00e676;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.close-ssh-btn {
+    background: none;
+    border: none;
+    color: #627d69;
+    font-size: 22px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-ssh-btn:hover {
+    color: #ff3366;
+}
+
+
+/* Formulaire interne */
+
+.ssh-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.input-group label {
+    font-size: 11px;
+    color: #627d69;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 10px;
+    color: #fff;
+    font-family: 'Consolas', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #00e676;
+}
+
+.input-group input[readonly] {
+    color: #00e676;
+    background: rgba(0, 230, 118, 0.02);
+    border-color: rgba(0, 230, 118, 0.15);
+}
+
+.ssh-connect-btn {
+    margin-top: 10px;
+    border-color: #00e676 !important;
+    color: #00e676 !important;
+    background: rgba(0, 230, 118, 0.05) !important;
+    height: 40px !important;
+}
+
+.ssh-connect-btn:hover {
+    background: #00e676 !important;
+    color: #050b14 !important;
+}
+
+
+/* ==========================================================================
+--- FENÊTRE MODALE PUTTY AU MILIEU (CORRIGÉE FLEXBOX) ---
+========================================================================== */
+
+.putty-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.putty-window {
+    width: 80%;
+    max-width: 850px;
+    height: 65%;
+    background: #000000;
+    border: 1px solid #00e676;
+    box-shadow: 0 0 35px rgba(0, 230, 118, 0.2);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Verrouille la taille de la boîte */
+}
+
+.putty-header {
+    background: #111;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222;
+    flex-shrink: 0;
+}
+
+.putty-title {
+    color: #00e676;
+    font-size: 13px;
+    font-family: monospace;
+}
+
+.putty-close-btn {
+    background: none;
+    border: none;
+    color: #ff3366;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+
+/* Wrapper de l'écran : se réduit sans pousser le footer */
+
+.putty-body {
+    flex: 1;
+    min-height: 0;
+    /* Autorise le conteneur à scroller au lieu de grandir */
+    padding: 10px;
+    background: #000;
+    display: flex;
+}
+
+
+/* Zone de scroll interne de la div de sortie */
+
+.terminal-scroll-area {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+
+/* Classes utilitaires pour les tags ANSI convertis */
+
+.ansi-green {
+    color: #00e676;
+    font-weight: bold;
+}
+
+.ansi-cyan {
+    color: #00e5ff;
+    font-weight: bold;
+}
+
+.ansi-gray {
+    color: #757575;
+}
+
+.ansi-bold {
+    font-weight: bold;
+}
+
+
+/* Le footer reste cloué en bas */
+
+.putty-footer {
+    background: #111;
+    border-top: 1px solid #222;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 10px;
+    flex-shrink: 0;
+    /* Bloque l'écrasement par la zone putty-body */
+}
+
+.putty-prompt {
+    color: #00e676;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+#putty-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #00ff66;
+    font-family: 'Consolas', monospace;
+    font-size: 14px;
+    outline: none;
+}
