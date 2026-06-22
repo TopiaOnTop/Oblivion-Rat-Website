@@ -1,15 +1,44 @@
-[{
-    "id": "u2",
-    "version": "1.0.0-beta",
-    "date_fr": "15 juin 2026",
-    "date_en": "June 15, 2026",
-    "title_fr": "Version Beta",
-    "title_en": "Beta Version ",
-    "importance": 4,
-    "desc_fr": "Version beta qui va bientôt sortir.",
-    "desc_en": "Beta version releasing soon.",
-    "added_fr": [],
-    "added_en": [],
-    "removed_fr": [],
-    "removed_en": []
-}]
+[
+    {
+        "id": "u1",
+        "version": "1.0.0-alpha",
+        "date_fr": "15 juin 2026",
+        "date_en": "June 15, 2026",
+        "title_fr": "Version Alpha",
+        "title_en": "Alpha Version",
+        "importance": 3,
+        "desc_fr": "Version initiale de test.",
+        "desc_en": "Initial testing version.",
+        "added_fr": [],
+        "added_en": [],
+        "removed_fr": [],
+        "removed_en": []
+    },
+    {
+        "id": "u2",
+        "version": "1.0.0-beta",
+        "date_fr": "22 juin 2026",
+        "date_en": "June 22, 2026",
+        "title_fr": "Version Beta",
+        "title_en": "Beta Version",
+        "importance": 4,
+        "desc_fr": "Déploiement de la version beta avec correctifs et nouvelle identité visuelle.",
+        "desc_en": "Beta version deployment with fixes and new visual identity.",
+        "added_fr": [
+            "Nouveau logo",
+            "Amélioration de l'interface"
+        ],
+        "added_en": [
+            "New logo",
+            "UI improvements"
+        ],
+        "removed_fr": [
+            "Correction des bugs d'affichage",
+            "Résolution des erreurs de chargement"
+        ],
+        "removed_en": [
+            "Fixed display bugs",
+            "Resolved loading errors"
+        ]
+    }
+]
