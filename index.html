@@ -4548,11 +4548,11 @@
         async function loadFeatures() {
             const grid = document.getElementById('featuresGrid');
             try {
-                const url = 'https://raw.githubusercontent.com/Kodein-ParaStress/oblivionjson/refs/heads/main/features.json';
-
+                const url = '/features.json';
+        
                 const res = await fetch(url);
                 if (!res.ok) throw new Error('Impossible de récupérer le fichier (HTTP ' + res.status + ')');
-
+        
                 featuresData = await res.json();
                 renderFeatures('free');
             } catch (e) {
@@ -4562,22 +4562,22 @@
                 }
             }
         }
-
+        
         function renderFeatures(tier) {
             currentTier = tier;
             const grid = document.getElementById('featuresGrid');
             if (!grid) return;
-
+        
             const items = (featuresData && featuresData[tier]) || [];
             const lang = currentLang;
-
+        
             grid.style.opacity = '0';
             setTimeout(() => {
                 grid.innerHTML = items.map((f, i) => {
                     const title = f['title_' + lang] || '';
                     const desc = f['desc_' + lang] || '';
                     const icon = f.icon || '';
-
+        
                     return `
                         <div class="feature-card"
                             style="animation-delay:${i * 60}ms"
@@ -4590,10 +4590,9 @@
                         </div>
                     `;
                 }).join('');
-
+        
                 grid.style.opacity = '1';
-
-                
+        
                 grid.querySelectorAll('.feature-card').forEach(card => {
                     card.addEventListener('click', () => {
                         const title = card.getAttribute('data-title');
@@ -4604,42 +4603,39 @@
                 });
             }, 200);
         }
-
         
-
         function openFeatureModal(title, description, icon) {
             const modal = document.getElementById('featureModal');
             if (!modal) return;
-
+        
             const modalTitle = document.getElementById('modalTitle');
             const modalDesc = document.getElementById('modalDesc');
             const modalIcon = document.getElementById('modalIcon');
-
+        
             if (modalTitle) modalTitle.innerText = title || '';
             if (modalDesc) modalDesc.innerText = description || '';
             if (modalIcon) modalIcon.className = icon || '';
-
+        
             modal.style.display = 'flex';
             
             requestAnimationFrame(() => {
                 modal.classList.add('active');
             });
-
+        
             document.body.classList.add('modal-open');
         }
-
+        
         function closeFeatureModal() {
             const modal = document.getElementById('featureModal');
             if (!modal) return;
-
+        
             modal.classList.remove('active');
             document.body.classList.remove('modal-open');
-
+        
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 300);
         }
-
         
         window.addEventListener('click', (event) => {
             const modal = document.getElementById('featureModal');
@@ -4647,7 +4643,6 @@
                 closeFeatureModal();
             }
         });
-
         
         window.addEventListener('keydown', (event) => {
             const modal = document.getElementById('featureModal');
@@ -4655,17 +4650,15 @@
                 closeFeatureModal();
             }
         });
-
         
-
         async function loadUpdates() {
             const list = document.getElementById('updatesList');
             try {
-                const url = 'https://raw.githubusercontent.com/Kodein-ParaStress/oblivionjson/refs/heads/main/updates.json';
-
+                const url = '/updates.json';
+        
                 const res = await fetch(url);
                 if (!res.ok) throw new Error('Erreur HTTP: ' + res.status);
-
+        
                 updatesData = await res.json();
                 renderUpdates();
             } catch (e) {
@@ -4675,27 +4668,27 @@
                 }
             }
         }
-
+        
         function renderUpdates() {
             const lang = currentLang;
             const t = i18n[lang];
             const list = document.getElementById('updatesList');
             if (!list) return;
-
+        
             list.innerHTML = (updatesData || []).map((u, i) => {
-                        const stars = Array.from({
-                                length: 5
-                            }, (_, s) =>
-                            `<i class="${s < u.importance ? 'fa-solid star-filled' : 'fa-regular star-empty'} fa-star"></i>`
-                        ).join('');
-
-                        const addedItems = u['added_' + lang] || [];
-                        const removedItems = u['removed_' + lang] || [];
-
-                        const added = addedItems.map(a => `<li><i class="fa-solid fa-plus"></i> ${escapeHTML(a)}</li>`).join('');
-                        const removed = removedItems.map(r => `<li><i class="fa-solid fa-minus"></i> ${escapeHTML(r)}</li>`).join('');
-
-                        return `
+                const stars = Array.from({
+                    length: 5
+                }, (_, s) =>
+                    `<i class="${s < u.importance ? 'fa-solid star-filled' : 'fa-regular star-empty'} fa-star"></i>`
+                ).join('');
+        
+                const addedItems = u['added_' + lang] || [];
+                const removedItems = u['removed_' + lang] || [];
+        
+                const added = addedItems.map(a => `<li><i class="fa-solid fa-plus"></i> ${escapeHTML(a)}</li>`).join('');
+                const removed = removedItems.map(r => `<li><i class="fa-solid fa-minus"></i> ${escapeHTML(r)}</li>`).join('');
+        
+                return `
                     <div class="update-card" style="animation-delay:${i * 80}ms">
                         <div class="update-header">
                             <div class="update-version-block">
